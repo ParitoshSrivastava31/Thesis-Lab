@@ -12,7 +12,7 @@ export default function LandingPage() {
             <div className="flex gap-6 items-center">
                 <Link href="#features" className="text-text-secondary hover:text-text-primary transition-colors">Features</Link>
                 <Link href="#pricing" className="text-text-secondary hover:text-text-primary transition-colors">Pricing</Link>
-                <Link href="/login">
+                <Link href="/dashboard">
                     <Button>Start Modeling</Button>
                 </Link>
             </div>
@@ -38,7 +38,7 @@ export default function LandingPage() {
             </p>
 
             <div className="flex gap-4">
-                <Link href="/signup">
+                <Link href="/dashboard">
                     <Button size="lg" className="px-8 h-12 text-base">
                         Build Your First Thesis →
                     </Button>

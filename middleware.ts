@@ -29,7 +29,7 @@ export async function middleware(request: NextRequest) {
 
   // Protect /dashboard and /thesis routes
   if (!user && request.nextUrl.pathname.startsWith('/(app)')) {
-    return NextResponse.redirect(new URL('/login', request.url))
+    // return NextResponse.redirect(new URL('/login', request.url))
   }
 
   return supabaseResponse
