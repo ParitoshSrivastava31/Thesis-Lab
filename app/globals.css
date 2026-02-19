@@ -1,26 +1,72 @@
+
 @import "tailwindcss";
 
+@theme {
+  --color-bg-void: #05060A;
+  --color-bg-surface: #0C0E18;
+  --color-bg-elevated: #131628;
+  --color-bg-border: #1E2235;
+  --color-brand-primary: #4B7BFF;
+  --color-brand-glow: #4B7BFF33;
+  --color-brand-pulse: #7B9FFF;
+  --color-node-macro: #4B7BFF;
+  --color-node-sector: #A855F7;
+  --color-node-company: #22D3EE;
+  --color-node-risk: #F43F5E;
+  --color-node-catalyst: #F59E0B;
+  --color-node-structural: #10B981;
+  --color-score-strong: #10B981;
+  --color-score-moderate: #F59E0B;
+  --color-score-weak: #F43F5E;
+  --color-text-primary: #F0F2FF;
+  --color-text-secondary: #8891B8;
+  --color-text-tertiary: #454D6D;
+  --color-positive: #10B981;
+  --color-negative: #F43F5E;
+  --color-warning: #F59E0B;
+
+  --color-neutral: #8891B8;
+  
+  --font-syne: var(--font-syne);
+  --font-jetbrains: var(--font-jetbrains);
+}
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Spacing Scale */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-20: 80px;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+@layer utilities {
+  .node-glow {
+    filter: drop-shadow(0 0 6px var(--node-color)) 
+            drop-shadow(0 0 18px var(--node-color-40));
+  }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  .core-glow {
+    box-shadow: 
+      0 0 20px var(--brand-primary),
+      0 0 60px var(--brand-glow),
+      0 0 120px rgba(75, 123, 255, 0.08);
+  }
+
+  .panel-border {
+    border: 1px solid var(--bg-border);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.04);
   }
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--color-bg-void);
+  color: var(--color-text-primary);
+  font-family: var(--font-syne), sans-serif;
 }
