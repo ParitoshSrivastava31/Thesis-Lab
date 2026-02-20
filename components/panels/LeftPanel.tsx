@@ -2,6 +2,7 @@
 
 import React, { useState, ReactNode } from 'react';
 import { AssumptionList } from './AssumptionList';
+import { HistoryList } from './HistoryList';
 import { ScenarioList } from '@/components/panels/ScenarioList';
 import { ChevronDown, ChevronRight, Layers, History, List } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -42,7 +43,7 @@ export function LeftPanel() {
         <ScenarioList />
       </CollapsibleSection>
 
-      {/* 3. History Section (Coming Soon) */}
+      {/* 3. History Section */}
       <CollapsibleSection 
         title="History" 
         icon={<History className="w-3 h-3" />}
@@ -50,9 +51,7 @@ export function LeftPanel() {
         onToggle={() => toggleSection('history')}
         className="border-t border-bg-border"
       >
-        <div className="p-4 text-xs text-text-tertiary text-center">
-            Version history coming in Week 4.
-        </div>
+        <HistoryList />
       </CollapsibleSection>
 
     </div>

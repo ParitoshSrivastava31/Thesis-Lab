@@ -18,8 +18,8 @@ export function CanvasToolbar() {
   return (
     <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 flex items-center gap-2 p-1.5 rounded-xl bg-bg-elevated/80 backdrop-blur-md border border-bg-border shadow-lg z-10 transition-all hover:scale-105">
       
-      {/* View Mode Toggles */}
-      <div className="flex bg-bg-surface rounded-lg p-0.5 border border-bg-border mr-2">
+      {/* View Mode Toggles - hidden on mobile, automatically falls back to 2D in layout */}
+      <div className="hidden md:flex bg-bg-surface rounded-lg p-0.5 border border-bg-border mr-2">
         <button
           onClick={() => setMode('2D')}
           className={`p-2 rounded-md transition-all ${mode === '2D' ? 'bg-bg-elevated text-brand-primary shadow-sm' : 'text-text-tertiary hover:text-text-primary'}`}
@@ -36,7 +36,7 @@ export function CanvasToolbar() {
         </button>
       </div>
 
-      <div className="w-px h-8 bg-bg-border mx-1" />
+      <div className="hidden md:block w-px h-8 bg-bg-border mx-1" />
 
       {/* Sensitivity Mode */}
       <Button 

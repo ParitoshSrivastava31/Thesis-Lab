@@ -1,21 +1,13 @@
 
-"use client"
+"use client";
 
-import { useState } from "react"
-import { useForm } from "react-hook-form"
-import { zodResolver } from "@hookform/resolvers/zod"
-import * as z from "zod"
-import { Button } from "@/components/ui/Button"
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/Dialog"
-import { Plus, Loader2 } from "lucide-react"
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
+import { Button } from "@/components/ui/Button";
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/Dialog";
+import { Plus, Loader2, AlertCircle } from "lucide-react";
 
 const formSchema = z.object({
   name: z.string().min(1, "Name is required").max(100),
@@ -28,6 +20,9 @@ type FormData = z.infer<typeof formSchema>
 export function NewThesisModal() {
   const [open, setOpen] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
+  
+  // Mocked for Week 5
+  const isLimitReached = true;
 
   const {
     register,
@@ -80,8 +75,17 @@ export function NewThesisModal() {
           </DialogDescription>
         </DialogHeader>
 
+        {isLimitReached && (
+            <div className="bg-warning/10 border border-warning/50 text-warning px-4 py-3 rounded-lg text-sm font-syne flex items-start gap-3 mt-2">
+                <AlertCircle className="w-5 h-5 shrink-0" />
+                <div>
+                   <strong>Hobbyist Plan Limit Reached</strong>
+                   <p className="mt-1 opacity-90">You have reached the limit of 1 active thesis on the free plan. Upgrade to Professional to create unlimited theses.</p>
+                </div>
+            </div>
+        )}
 
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 py-4">
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 py-2">
           <div className="space-y-2">
             <label className="text-sm font-medium text-text-secondary">Thesis Name</label>
             <input

@@ -2,30 +2,30 @@
 @import "tailwindcss";
 
 @theme {
-  --color-bg-void: #05060A;
-  --color-bg-surface: #0C0E18;
-  --color-bg-elevated: #131628;
-  --color-bg-border: #1E2235;
-  --color-brand-primary: #4B7BFF;
-  --color-brand-glow: #4B7BFF33;
-  --color-brand-pulse: #7B9FFF;
-  --color-node-macro: #4B7BFF;
-  --color-node-sector: #A855F7;
-  --color-node-company: #22D3EE;
-  --color-node-risk: #F43F5E;
+  --color-bg-void: #FDFDFD;
+  --color-bg-surface: #FFFFFF;
+  --color-bg-elevated: #F3F4F6;
+  --color-bg-border: #E5E7EB;
+  --color-brand-primary: #111827;
+  --color-brand-glow: #1118271A;
+  --color-brand-pulse: #4B5563;
+  --color-node-macro: #3B82F6;
+  --color-node-sector: #8B5CF6;
+  --color-node-company: #0EA5E9;
+  --color-node-risk: #EF4444;
   --color-node-catalyst: #F59E0B;
   --color-node-structural: #10B981;
   --color-score-strong: #10B981;
   --color-score-moderate: #F59E0B;
-  --color-score-weak: #F43F5E;
-  --color-text-primary: #F0F2FF;
-  --color-text-secondary: #8891B8;
-  --color-text-tertiary: #454D6D;
+  --color-score-weak: #EF4444;
+  --color-text-primary: #111827;
+  --color-text-secondary: #4B5563;
+  --color-text-tertiary: #9CA3AF;
   --color-positive: #10B981;
-  --color-negative: #F43F5E;
+  --color-negative: #EF4444;
   --color-warning: #F59E0B;
 
-  --color-neutral: #8891B8;
+  --color-neutral: #D1D5DB;
   
   --font-syne: var(--font-syne);
   --font-jetbrains: var(--font-jetbrains);
@@ -48,20 +48,18 @@
 
 @layer utilities {
   .node-glow {
-    filter: drop-shadow(0 0 6px var(--node-color)) 
-            drop-shadow(0 0 18px var(--node-color-40));
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.05));
   }
 
   .core-glow {
     box-shadow: 
-      0 0 20px var(--brand-primary),
-      0 0 60px var(--brand-glow),
-      0 0 120px rgba(75, 123, 255, 0.08);
+      0 4px 20px rgba(0, 0, 0, 0.05),
+      0 10px 40px rgba(0, 0, 0, 0.02);
   }
 
   .panel-border {
     border: 1px solid var(--bg-border);
-    box-shadow: inset 0 1px 0 rgba(255,255,255,0.04);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.02);
   }
 }
 

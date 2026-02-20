@@ -1,6 +1,6 @@
 import { useRef, useMemo } from 'react';
 import { useFrame } from '@react-three/fiber';
-import { Sphere, Html } from '@react-three/drei';
+import { Sphere, Html, GradientTexture, MeshDistortMaterial } from '@react-three/drei';
 import * as THREE from 'three';
 import { ThesisNode } from '@/types/graph';
 
@@ -9,15 +9,16 @@ interface NodeMeshProps {
   isSelected: boolean;
   isHovered: boolean;
   isSensitivityMode: boolean;
+  previousProbability?: number; // Added for diff visualization
   onSelect: (id: string) => void;
   onHover: (id: string | null) => void;
 }
 
 const TYPE_COLORS: Record<ThesisNode['type'], string> = {
-  MACRO_FACTOR: '#4B7BFF',      // Blue
-  SECTOR_TREND: '#A855F7',      // Purple
-  COMPANY_FACTOR: '#22D3EE',    // Cyan
-  RISK_FACTOR: '#F43F5E',       // Red
+  MACRO_FACTOR: '#3B82F6',      // Calming Blue
+  SECTOR_TREND: '#8B5CF6',      // Soft Purple
+  COMPANY_FACTOR: '#0EA5E9',    // Cyan
+  RISK_FACTOR: '#EF4444',       // Muted Red
   CATALYST: '#F59E0B',          // Amber
   STRUCTURAL_DRIVER: '#10B981', // Emerald
 };
@@ -27,6 +28,7 @@ export function NodeMesh({
   isSelected, 
   isHovered, 
   isSensitivityMode,
+  previousProbability,
   onSelect, 
   onHover 
 }: NodeMeshProps) {
@@ -86,22 +88,38 @@ export function NodeMesh({
           document.body.style.cursor = 'auto';
         }}
       >
-        <meshStandardMaterial 
+        <meshPhysicalMaterial 
           color={color}
           emissive={color}
-          emissiveIntensity={node.probability / 100}
-          roughness={0.4}
-          metalness={0.6}
+          emissiveIntensity={(node.probability / 100) * 0.3}
+          roughness={0.15}
+          metalness={0.1}
+          clearcoat={1.0}
+          clearcoatRoughness={0.1}
+          transmission={0.7} // Glass-like transparency
+          thickness={1.2} // Volume for refraction
+          ior={1.5} // Index of Refraction for crystals
           transparent
           opacity={1}
-        />
+        >
+          {/* Subtle gradient texture map over the orb */}
+          <GradientTexture attach="map" stops={[0, 1]} colors={['#ffffff', color]} size={128} />
+        </meshPhysicalMaterial>
       </Sphere>
       
-      {/* Node Label - simplified for clarity */}
-      {(isHovered || isSelected) && (
+      {/* Node Label - visual diff if previousProbability differs */}
+      {(isHovered || isSelected || previousProbability !== undefined) && (
         <Html position={[0, baseRadius + 0.2, 0]} center pointerEvents="none">
           <div className="bg-bg-elevated/90 backdrop-blur px-2 py-1 rounded border border-bg-border text-xs text-text-primary whitespace-nowrap z-50 pointer-events-none select-none">
-            {node.title} <span className="text-text-tertiary ml-1">{node.probability}%</span>
+            {node.title}{' '}
+            <span className="text-text-tertiary ml-1">
+                {previousProbability !== undefined && previousProbability !== node.probability && (
+                    <span className="line-through text-text-secondary/50 mr-1">{previousProbability}%</span>
+                )}
+                <span className={previousProbability !== undefined && previousProbability !== node.probability ? 'text-brand-pulse' : ''}>
+                    {node.probability}%
+                </span>
+            </span>
           </div>
         </Html>
       )}

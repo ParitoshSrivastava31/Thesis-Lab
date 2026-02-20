@@ -1,61 +1,110 @@
+"use client";
 
 import Link from "next/link"
 import { Button } from "@/components/ui/Button"
+import { ConstellationCanvas } from "@/components/canvas/ConstellationCanvas";
+import { useGraphStore } from "@/store/graphStore";
+import { useEffect } from "react";
+import { motion } from "framer-motion";
 
 export default function LandingPage() {
+  const { setNodes, setEdges } = useGraphStore();
+
+  useEffect(() => {
+    // Set 5 hardcoded nodes and 4 edges for the hero demo
+    setNodes([
+      { id: '1', thesisId: 'demo', title: 'Macro Policy Pivot', type: 'MACRO_FACTOR', probability: 85, confidence: 'HIGH', timeRelevance: 'MEDIUM', sensitivityScore: 90, position: [0, 0, 0] },
+      { id: '2', thesisId: 'demo', title: 'Supply Chain Easing', type: 'CATALYST', probability: 60, confidence: 'MEDIUM', timeRelevance: 'SHORT', sensitivityScore: 40, position: [-2, 1, 0] },
+      { id: '3', thesisId: 'demo', title: 'Sector Deleveraging', type: 'SECTOR_TREND', probability: 75, confidence: 'MEDIUM', timeRelevance: 'LONG', sensitivityScore: 60, position: [2, 1, 0] },
+      { id: '4', thesisId: 'demo', title: 'Competitive Moat', type: 'COMPANY_FACTOR', probability: 90, confidence: 'HIGH', timeRelevance: 'LONG', sensitivityScore: 85, position: [1, -2, 0] },
+      { id: '5', thesisId: 'demo', title: 'Regulatory Headwind', type: 'RISK_FACTOR', probability: 30, confidence: 'LOW', timeRelevance: 'SHORT', sensitivityScore: 70, position: [-1, -2, 0] },
+    ]);
+    setEdges([
+      { id: 'e1', thesisId: 'demo', source: '2', target: '1', weight: 0.6, strength: 'MODERATE', dependencyType: 'CORRELATED' },
+      { id: 'e2', thesisId: 'demo', source: '1', target: '3', weight: 0.9, strength: 'STRONG', dependencyType: 'CAUSAL' },
+      { id: 'e3', thesisId: 'demo', source: '4', target: '3', weight: 0.8, strength: 'STRONG', dependencyType: 'CONDITIONAL' },
+      { id: 'e4', thesisId: 'demo', source: '5', target: '4', weight: 0.5, strength: 'MODERATE', dependencyType: 'CAUSAL' },
+    ]);
+  }, [setNodes, setEdges]);
+
+  // Motion variants for stagger
+  const containerVars = {
+    hidden: { opacity: 1 },
+    show: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.15
+      }
+    }
+  };
+
+  const childVars = {
+    hidden: { opacity: 0.01, y: 20 },
+    show: { opacity: 1, y: 0, transition: { type: "spring" as const, stiffness: 50, damping: 15 } }
+  };
+
   return (
     <div className="flex flex-col min-h-screen">
         {/* Navbar */}
 
         <nav className="h-14 px-6 flex items-center justify-between absolute top-0 w-full z-50">
-            <div className="font-bold text-xl tracking-tight text-text-primary">ThesisLab</div>
+            <div className="font-syne font-bold text-xl tracking-tight text-text-primary">ThesisLab</div>
             <div className="flex gap-6 items-center">
-                <Link href="#features" className="text-text-secondary hover:text-text-primary transition-colors">Features</Link>
-                <Link href="#pricing" className="text-text-secondary hover:text-text-primary transition-colors">Pricing</Link>
+                <Link href="#features" className="text-text-secondary hover:text-text-primary transition-colors text-sm font-syne">Features</Link>
+                <Link href="/pricing" className="text-text-secondary hover:text-text-primary transition-colors text-sm font-syne">Pricing</Link>
                 <Link href="/dashboard">
-                    <Button>Start Modeling</Button>
+                    <Button className="bg-brand-primary text-white hover:brightness-115">Start Modeling</Button>
                 </Link>
             </div>
         </nav>
 
         {/* Hero */}
         <section className="flex-1 flex flex-col items-center justify-center pt-32 pb-20 px-4 text-center relative overflow-hidden">
-             {/* Background particles placeholder */}
-            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,var(--color-bg-elevated)_0%,var(--color-bg-void)_70%)] -z-10" />
+            {/* Background Base */}
+            <div className="absolute inset-0 bg-bg-void -z-20" />
+             
+            {/* Minimal Grid Pattern for Architecture / Structure Vibe */}
+            <div className="absolute inset-0 -z-10 h-full w-full bg-[linear-gradient(to_right,var(--color-bg-border)_1px,transparent_1px),linear-gradient(to_bottom,var(--color-bg-border)_1px,transparent_1px)] bg-size-[4rem_4rem] mask-[radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)] opacity-50"></div>
             
-            <span className="text-text-tertiary text-[11px] tracking-[0.2em] font uppercase mb-6 font-syne">
-                For Probabilistic Investors
-            </span>
-            
-            <h1 className="text-5xl md:text-7xl font-extrabold text-text-primary leading-[1.1] max-w-3xl mb-6 font-syne">
-                Your thesis has hidden <br className="hidden md:block" />
-                <span className="text-text-primary">fault lines.</span>
-            </h1>
+            <div className="flex flex-col items-center z-10 animate-in fade-in slide-in-from-bottom-4 duration-1000">
+                <span className="text-text-tertiary text-[11px] tracking-[0.2em] font-syne uppercase mb-6 font-bold">
+                    For Probabilistic Investors
+                </span>
+                
+                <h1 className="text-6xl md:text-6xl font-syne font-extrabold text-text-primary leading-[1.1] max-w-[700px] mb-6">
+                    Your thesis has hidden <br className="hidden md:block" />
+                    <span className="text-text-primary">fault lines.</span>
+                </h1>
 
-            <p className="text-text-secondary text-lg md:text-xl max-w-xl mb-10 font-syne">
-                ThesisLab maps the structure of your belief. <br />
-                Find which assumption matters most.
-            </p>
+                <p className="text-text-secondary text-[20px] max-w-xl mb-10 mt-6 font-syne">
+                    ThesisLab maps the structure of your belief. <br />
+                    Find which assumption matters most.
+                </p>
 
-            <div className="flex gap-4">
-                <Link href="/dashboard">
-                    <Button size="lg" className="px-8 h-12 text-base">
-                        Build Your First Thesis →
-                    </Button>
-                </Link>
-                <Link href="#demo">
-                    <Button variant="outline" size="lg" className="px-8 h-12 text-base border-bg-border">
-                        See a Live Example
-                    </Button>
-                </Link>
+                <div className="flex gap-4 mt-10">
+                    <Link href="/dashboard">
+                        <Button size="lg" className="px-8 py-4 bg-brand-primary text-white font-syne font-semibold rounded-lg hover:brightness-115 transition duration-200">
+                            Build Your First Thesis →
+                        </Button>
+                    </Link>
+                    <Link href="/dashboard">
+                        <Button variant="outline" size="lg" className="px-8 py-4 border-bg-border font-syne rounded-lg hover:bg-bg-elevated">
+                            See a Live Demo
+                        </Button>
+                    </Link>
+                </div>
             </div>
 
-            {/* Constellation Placeholder */}
-            <div className="mt-20 w-full max-w-4xl h-[400px] bg-bg-surface/30 border border-bg-border rounded-2xl relative overflow-hidden flex items-center justify-center">
-                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,var(--color-brand-primary)_0%,transparent_70%)] opacity-10 blur-3xl" />
-                 <p className="text-text-tertiary">[ 3D Constellation Demo Loading... ]</p>
-                 {/* This will be replaced by ConstellationCanvas in Week 2 */}
-            </div>
+            {/* Constellation Canvas below hero */}
+            <motion.div 
+                initial={{ opacity: 0, y: 50 }} 
+                animate={{ opacity: 1, y: 0 }} 
+                transition={{ delay: 0.8, duration: 1 }}
+                className="mt-20 w-full max-w-4xl h-[400px] relative pointer-events-none"
+            >
+                 <div className="absolute inset-x-0 bottom-0 h-1/2 bg-linear-to-t from-bg-void to-transparent z-10 pointer-events-none" />
+                 <ConstellationCanvas />
+            </motion.div>
         </section>
 
         {/* Feature Highlights Simplified */}

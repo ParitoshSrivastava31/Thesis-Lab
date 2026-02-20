@@ -10,6 +10,7 @@ import { RightPanel } from '@/components/panels/RightPanel';
 import { useGraphStore } from '@/store/graphStore';
 import { useUIStore } from '@/store/uiStore';
 import { useSimulationController } from '@/store/simulationStore';
+import { useVersionController } from '@/store/versionStore';
 import { ThesisNode, ThesisEdge } from '@/types/graph';
 
 // Mock data for development - remove when API integration is ready
@@ -46,6 +47,22 @@ export default function ThesisPage() {
 
     // TODO: implement API fetch here in Week 3
   }, []); 
+
+  // Auto-save versions
+  const { createVersion } = useVersionController();
+  const { nodes, edges } = useGraphStore();
+  
+  useEffect(() => {
+    // Only auto-save if we have nodes loaded
+    if (nodes.length === 0) return;
+    
+    const timeoutId = setTimeout(() => {
+        createVersion('Auto-save');
+    }, 2000); // 2 second debounce
+    
+    return () => clearTimeout(timeoutId);
+  }, [nodes, edges]); // Re-run when graph changes
+
 
   return (
     <div className="flex h-[calc(100vh-56px)] overflow-hidden">

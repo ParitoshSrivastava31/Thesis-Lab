@@ -20,10 +20,10 @@ const STRENGTH_OPACITY = {
 
 // Colors based on source node type
 const TYPE_COLORS: Record<ThesisNode['type'], string> = {
-  MACRO_FACTOR: '#4B7BFF',
-  SECTOR_TREND: '#A855F7',
-  COMPANY_FACTOR: '#22D3EE',
-  RISK_FACTOR: '#F43F5E',
+  MACRO_FACTOR: '#3B82F6',
+  SECTOR_TREND: '#8B5CF6',
+  COMPANY_FACTOR: '#0EA5E9',
+  RISK_FACTOR: '#EF4444',
   CATALYST: '#F59E0B',
   STRUCTURAL_DRIVER: '#10B981',
 };
