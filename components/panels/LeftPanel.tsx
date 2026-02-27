@@ -20,12 +20,12 @@ export function LeftPanel() {
   };
 
   return (
-    <div className="flex flex-col h-full bg-bg-elevated border-r border-bg-border overflow-y-auto w-[300px]">
-      
+    <div className="flex flex-col h-[calc(100vh-3.5rem)] bg-white/40 backdrop-blur-xl border-r border-white/60 shadow-[4px_0_30px_rgba(0,0,0,0.02)] overflow-y-auto w-[320px] rounded-br-2xl">
+
       {/* 1. Assumptions Section */}
-      <CollapsibleSection 
-        title="Assumptions" 
-        icon={<List className="w-3 h-3" />}
+      <CollapsibleSection
+        title="Assumptions"
+        icon={<List className="w-4 h-4 text-brand-primary" />}
         isOpen={openSections.assumptions}
         onToggle={() => toggleSection('assumptions')}
       >
@@ -33,23 +33,23 @@ export function LeftPanel() {
       </CollapsibleSection>
 
       {/* 2. Scenarios Section */}
-      <CollapsibleSection 
-        title="Scenarios" 
-        icon={<Layers className="w-3 h-3" />}
+      <CollapsibleSection
+        title="Scenarios"
+        icon={<Layers className="w-4 h-4 text-node-sector" />}
         isOpen={openSections.scenarios}
         onToggle={() => toggleSection('scenarios')}
-        className="border-t border-bg-border"
+        className="border-t border-bg-border/50"
       >
         <ScenarioList />
       </CollapsibleSection>
 
       {/* 3. History Section */}
-      <CollapsibleSection 
-        title="History" 
-        icon={<History className="w-3 h-3" />}
+      <CollapsibleSection
+        title="History"
+        icon={<History className="w-4 h-4 text-node-macro" />}
         isOpen={openSections.history}
         onToggle={() => toggleSection('history')}
-        className="border-t border-bg-border"
+        className="border-t border-bg-border/50"
       >
         <HistoryList />
       </CollapsibleSection>
@@ -59,33 +59,35 @@ export function LeftPanel() {
 }
 
 interface CollapsibleSectionProps {
-    title: string;
-    icon: ReactNode;
-    isOpen: boolean;
-    onToggle: () => void;
-    children: ReactNode;
-    className?: string;
+  title: string;
+  icon: ReactNode;
+  isOpen: boolean;
+  onToggle: () => void;
+  children: ReactNode;
+  className?: string;
 }
 
 function CollapsibleSection({ title, icon, isOpen, onToggle, children, className }: CollapsibleSectionProps) {
-    return (
-        <div className={cn("flex flex-col", className)}>
-            <button 
-                onClick={onToggle}
-                className="flex items-center justify-between w-full p-4 hover:bg-bg-surface/50 transition-colors text-left"
-            >
-                <div className="flex items-center gap-2">
-                    {icon}
-                    <span className="text-xs font-syne font-bold uppercase tracking-widest text-text-secondary">{title}</span>
-                </div>
-                {isOpen ? <ChevronDown className="w-3 h-3 text-text-tertiary" /> : <ChevronRight className="w-3 h-3 text-text-tertiary" />}
-            </button>
-            
-            {isOpen && (
-                <div className="animate-in slide-in-from-top-1 fade-in duration-200">
-                    {children}
-                </div>
-            )}
+  return (
+    <div className={cn("flex flex-col mb-2", className)}>
+      <button
+        onClick={onToggle}
+        className="flex items-center justify-between w-full p-5 hover:bg-white/40 transition-colors text-left group"
+      >
+        <div className="flex items-center gap-3">
+          <div className="p-1.5 rounded-md bg-white/50 shadow-sm border border-white/80 group-hover:scale-105 transition-transform">
+            {icon}
+          </div>
+          <span className="text-sm font-syne font-semibold tracking-wide text-text-primary">{title}</span>
         </div>
-    )
+        {isOpen ? <ChevronDown className="w-4 h-4 text-text-tertiary" /> : <ChevronRight className="w-4 h-4 text-text-tertiary" />}
+      </button>
+
+      {isOpen && (
+        <div className="animate-in slide-in-from-top-2 fade-in duration-300 pb-2">
+          {children}
+        </div>
+      )}
+    </div>
+  )
 }

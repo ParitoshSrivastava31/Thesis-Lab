@@ -1,4 +1,3 @@
-
 "use client"
 
 import Link from "next/link"
@@ -28,8 +27,7 @@ export function Sidebar() {
   const pathname = usePathname()
 
   return (
-
-    <aside className="fixed left-0 top-14 h-[calc(100vh-3.5rem)] w-16 flex flex-col items-center border-r border-bg-border bg-bg-surface py-4 gap-4 z-40">
+    <aside className="fixed left-0 top-14 h-[calc(100vh-3.5rem)] w-16 flex flex-col items-center border-r border-bg-border/40 bg-white/40 backdrop-blur-2xl py-6 gap-6 z-40 shadow-[4px_0_24px_rgba(0,0,0,0.02)]">
       {items.map((item) => {
         const isActive = pathname.startsWith(item.href)
         return (
@@ -37,10 +35,10 @@ export function Sidebar() {
             key={item.href}
             href={item.href}
             className={cn(
-              "p-2 rounded-md transition-colors",
+              "p-3 rounded-xl transition-all duration-300 hover-lift",
               isActive
-                ? "bg-brand-primary/10 text-brand-primary"
-                : "text-text-secondary hover:text-text-primary hover:bg-bg-elevated"
+                ? "bg-brand-primary text-white shadow-md shadow-brand-glow"
+                : "text-text-secondary hover:text-brand-primary hover:bg-white/60"
             )}
             title={item.title}
           >
