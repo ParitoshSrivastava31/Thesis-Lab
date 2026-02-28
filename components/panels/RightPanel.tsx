@@ -1,6 +1,7 @@
 "use client"
 
 import { NodeDetail } from './NodeDetail';
+import { EdgeDetail } from './EdgeDetail';
 import { StrengthScore } from './StrengthScore';
 import { MonteCarloChart } from '@/components/panels/MonteCarloChart';
 import { useGraphStore } from '@/store/graphStore';
@@ -9,7 +10,7 @@ import { cn } from '@/lib/utils';
 import { Activity, BarChart3, Target } from 'lucide-react';
 
 export function RightPanel() {
-   const { selectedNodeId } = useGraphStore();
+   const { selectedNodeId, selectedEdgeId } = useGraphStore();
    const { activePanel, setActivePanel } = useUIStore();
 
    return (
@@ -48,7 +49,9 @@ export function RightPanel() {
             {activePanel === 'monte-carlo' ? (
                <div className="animate-in slide-in-from-right-4 fade-in duration-300 h-full"><MonteCarloChart /></div>
             ) : (
-               selectedNodeId ? (
+               selectedEdgeId ? (
+                  <div className="animate-in slide-in-from-right-4 fade-in duration-300 h-full"><EdgeDetail /></div>
+               ) : selectedNodeId ? (
                   <div className="animate-in slide-in-from-right-4 fade-in duration-300 h-full"><NodeDetail /></div>
                ) : (
                   <div className="flex flex-col items-center justify-center h-full text-center p-8 space-y-4 opacity-80 animate-in fade-in duration-500">
@@ -56,8 +59,8 @@ export function RightPanel() {
                         <Target className="w-8 h-8 text-brand-primary/40" />
                      </div>
                      <div>
-                        <h3 className="text-sm font-bold font-syne text-text-primary mb-2 tracking-wide">Select a Node</h3>
-                        <p className="text-sm text-text-secondary leading-relaxed">Click any node in the constellation or assumption list to view details.</p>
+                        <h3 className="text-sm font-bold font-syne text-text-primary mb-2 tracking-wide">Select a Node or Edge</h3>
+                        <p className="text-sm text-text-secondary leading-relaxed">Click any node or relationship line in the constellation to view details.</p>
                      </div>
                   </div>
                )

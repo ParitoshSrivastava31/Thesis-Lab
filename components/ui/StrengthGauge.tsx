@@ -13,15 +13,15 @@ export function StrengthGauge({ score }: StrengthGaugeProps) {
   const glowColor = score < 40 ? "rgba(251, 113, 133, 0.2)" : score < 70 ? "rgba(251, 191, 36, 0.2)" : "rgba(52, 211, 153, 0.2)";
 
   // SVG calculations for arc
-  const radius = 80;
-  const stroke = 14;
+  const radius = 50;
+  const stroke = 8;
   const normalizedRadius = radius - stroke * 0.5;
   const circumference = normalizedRadius * 2 * Math.PI;
   const strokeDashoffset = circumference - (score / 100) * circumference;
 
   return (
-    <div className="flex flex-col items-center justify-center p-6 relative">
-      <div className="relative w-[200px] h-[200px] flex items-center justify-center">
+    <div className="flex flex-col items-center justify-center py-4 px-2 relative">
+      <div className="relative w-[120px] h-[120px] flex items-center justify-center">
         {/* Background Ring */}
         <svg
           height={radius * 2}
@@ -52,20 +52,20 @@ export function StrengthGauge({ score }: StrengthGaugeProps) {
         </svg>
 
         {/* Score Text */}
-        <div className={`absolute text-5xl font-jetbrains font-light tracking-tighter ${scoreColorClass}`}>
+        <div className={`absolute text-3xl font-jetbrains font-light tracking-tighter ${scoreColorClass}`}>
           {score}
         </div>
 
         {/* Pulsing ring visual effect */}
         <div className="absolute inset-2 rounded-full border border-white/40 shadow-inner bg-gradient-to-tr from-white/10 to-transparent pointer-events-none" />
         <div
-          className="absolute inset-[15px] rounded-full border-2 opacity-10 animate-pulse pointer-events-none"
+          className="absolute inset-[10px] rounded-full border-2 opacity-10 animate-pulse pointer-events-none"
           style={{ borderColor: ringColor }}
         />
       </div>
 
-      <div className="mt-6 text-center">
-        <div className="text-[10px] font-syne font-bold uppercase tracking-widest text-text-tertiary mb-1.5">
+      <div className="mt-3 text-center">
+        <div className="text-[10px] font-syne font-bold uppercase tracking-widest text-text-tertiary mb-1">
           THESIS STRENGTH
         </div>
         <div className={`text-sm font-semibold ${scoreColorClass}`}>

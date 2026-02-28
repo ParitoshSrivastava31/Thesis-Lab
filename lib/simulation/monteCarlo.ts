@@ -39,9 +39,10 @@ export function runMonteCarlo(
     const noisyNodes = nodes.map(node => {
       // Add noise to the current probability
       // We assume the user's set probability is the "mean"
-      const noise = gaussianNoise(0, CONFIDENCE_SIGMA[node.confidence]);
+      const sigma = node.volatility !== undefined ? node.volatility : CONFIDENCE_SIGMA[node.confidence];
+      const noise = gaussianNoise(0, sigma);
       const newProb = Math.max(0, Math.min(100, node.probability + noise));
-      
+
       return {
         ...node,
         probability: newProb

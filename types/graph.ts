@@ -1,5 +1,5 @@
 // Node types
-export type NodeType = 
+export type NodeType =
   | 'MACRO_FACTOR'
   | 'SECTOR_TREND'
   | 'COMPANY_FACTOR'
@@ -21,6 +21,7 @@ export interface ThesisNode {
   timeRelevance: TimeRelevance;
   sensitivityScore: number;
   position: [number, number, number];
+  volatility?: number; // Standard deviation for Monte Carlo
 }
 
 export type EdgeStrength = 'WEAK' | 'MODERATE' | 'STRONG' | 'CRITICAL';
@@ -34,4 +35,6 @@ export interface ThesisEdge {
   weight: number;
   strength: EdgeStrength;
   dependencyType: DependencyType;
+  decayFactor?: number; // Ripple signal loss factor 
+  multiplier?: number; // Effect elasticity/amplification
 }
